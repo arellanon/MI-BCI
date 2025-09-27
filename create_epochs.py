@@ -33,12 +33,12 @@ from libb import *
 class GenerateEpoch:
 
     def run(self):
-        tmin, tmax = 0.5, 2.5   #Rango para DATA1
-        #tmin, tmax = 0, 4      #Rango para DATA3          
+        #tmin, tmax = 0.5, 2.5   #Rango para DATA1 2s
+        tmin, tmax = 0, 4      #Rango para DATA3 4s
         print("tmin: ",tmin," - tmax: ", tmax )
 
         list_8ACH = ['Pz','Cz','T6','P4','C4','T5','P3','C3']  #TT3 #RR3  <-- con este se hicieron pruebas propias
-        list_8BCH = ['Pz','Cz','T4','P4','C4','T3','P3','C3']  #TT2 #RR2
+        #list_8BCH = ['Pz','Cz','T4','P4','C4','T3','P3','C3']  #TT2 #RR2
 
         
         list_channel = list_8ACH
@@ -46,8 +46,9 @@ class GenerateEpoch:
         fil_channel = False
 
         #dataSets = ["DATA1", "DATA3"]
-        dataSets = ["DATA4"]
-        sufijo = "NF2S8ACH"
+        dataSets = ["D2"]
+        
+        sufijo = "NF4S8ACH"
         
         for dataSet in dataSets:
         
@@ -58,7 +59,7 @@ class GenerateEpoch:
                 
                 for sesion in sesiones:
                 
-                    pathRaw = "Raw/"+ dataSet +"/" + sujeto + "/" + sesion + "/"
+                    pathRaw = "EEG data/Raw fif/" + dataSet +"/" + sujeto + "/" + sesion + "/"
                     pathEpoch = "Epoch/"+ dataSet +"/"
                     fileNameOut = prefijo + sujeto + tipo + "_" + sesion + "_" + sufijo
                     files = getFiles(dataSet, sujeto, tipo, sesion)
@@ -84,7 +85,44 @@ class GenerateEpoch:
                     print(epoch_final)
                     epoch_final.save(pathEpoch  + fileNameOut + "-epo.fif", overwrite=True)
                 
-                
+
+
+def getSujetos(dataSet):
+    if dataSet == "D1": 
+        sujetos = ["S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S12"]
+        return "D1", "I", sujetos
+    if dataSet == "D2": 
+        sujetos = ["SA", "SB"]
+        return "D2", "I", sujetos
+
+
+def getSessiones(dataSet, sujeto):
+    if dataSet == "D1":
+        sesiones =  ["S01"]
+        return sesiones
+    if dataSet == "D2":
+        if sujeto == "SA":
+            sesiones =  ["S01", "S02", "S03", "S06", "S07"]
+            return sesiones
+        if sujeto == "SB":
+            sesiones =  ["S02", "S04", "S05", "S06"]            
+            return sesiones
+
+def getFiles(dataSet, sujeto, tipo, sesion):
+    if dataSet == "D1":
+        runs = ["1", "2", "3", "4"]
+        files = []
+        for run in runs:
+            files.append("D1" + sujeto + tipo + "_" + sesion + "R" + run)
+        return files 
+    if dataSet == "D2":
+        runs = ["1", "2", "3", "4"]
+        files = []
+        for run in runs:
+            files.append(dataSet + sujeto + tipo + "_" + sesion + "R" + run)
+        return files
+
+"""
 def getSujetos(dataSet):
     if dataSet == "DATA1":
         sujetos =  ["SX"]
@@ -151,7 +189,7 @@ def getFiles(dataSet, sujeto, tipo, sesion):
         for run in runs:
             files.append("D5" + sujeto + tipo + "_" + sesion + "R" + run)
         return files     
-
+"""
 
 def main():
     print("Inicio...")
@@ -159,7 +197,6 @@ def main():
     generate.run()
     print("Fin...")
     
-
 
 if __name__ == "__main__":
     main()

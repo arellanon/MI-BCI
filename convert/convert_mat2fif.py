@@ -13,11 +13,13 @@ def main():
     # 772-tonge (REST)
     # SciPy.io.loadmat does not deal well with Matlab structures, resulting in lots of
     # extra dimensions in the arrays. This makes the code a bit more cluttered
-    sujeto = "S03"
-    sesion = "1"
-    pathIn = "../EEG data/Raw mat/"+ sujeto +"/"
-    pathOut = "../EEG data/Raw fif/"+ sujeto +"/"
-    fileNameIn = sujeto + "_FILT_S"+ sesion +"R"    
+    dataset = "D2"
+    sujeto = "SB"
+    sesion = "S06"
+    pathIn = "../EEG data/Raw mat/" + dataset + "/" + sujeto + "/" + sesion + "/"
+    pathOut = "../EEG data/Raw fif/" + dataset + "/" + sujeto + "/" + sesion + "/"
+    
+    fileNameIn =  dataset + sujeto + "I_"+ sesion +"R"    
 
     trials = ["1", "2", "3", "4"]
     for trial in trials:

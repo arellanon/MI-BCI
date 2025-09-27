@@ -414,10 +414,10 @@ def main():
     logging.getLogger('mne').setLevel(logging.ERROR)
     logging.basicConfig(filename="example.log", filemode="w", level=logging.DEBUG, format='%(asctime)s %(message)s')
     # Suprimir la advertencia de convergencia    
-    dataset = "DATA3"
+    dataset = "D2"
     #dataset = "DATAQ"
     folder_input = "Epoch/" + dataset + "/"
-    folder_output= "Output6/" + dataset + "/"
+    folder_output= "Output/" + dataset + "/"
     
     total_inicio=time.time()
     #EJECUCION DEL PROGRAMA
